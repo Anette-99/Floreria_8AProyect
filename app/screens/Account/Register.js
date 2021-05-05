@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image} from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
 
 export default function Register(){
     return(
@@ -10,7 +10,7 @@ export default function Register(){
                 style={styles.logo}
             />
             <View style = {styles.viewForms}>
-                <Text> Formulario de Registro </Text>
+                <Text>Formulario de registro</Text>
             </View>
         </View>
     )
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
         marginLeft: 40
     },
     logo:{
-        width:'100%',
-        height:150,
-        marginTop:20
+        width: '100%',
+        height: 150,
+        marginTop: 20
     }
 })

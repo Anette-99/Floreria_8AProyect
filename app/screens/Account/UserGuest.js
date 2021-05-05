@@ -15,14 +15,14 @@ export default function UserGuest(){
             />
             <Text style={styles.title}> Ingresa a tu perfil</Text>
             <Text style={styles.description}>
-                Visualiza las mejores florerias y comenta tu experiencia
+                Busca y Visualiza las mejores tiendas, Califica a tu preferencia y Comenta
             </Text>
             <View style={styles.viewBtn}>
                 <Button
                     title='Ver tu perfil'
                     buttonStyle={styles.btnStyle}
                     containerStyle={styles.btnContainer}
-                    onPress={()=>navigation.navigate('Login')}
+                    onPress={()=>navigation.navigate('login')}
                 />
             </View>
         </ScrollView>
@@ -47,15 +47,15 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     description:{
-        marginBottom:20,
-        textAlign:'center'
+        marginBottom: 20,
+        textAlign: 'center'
     },
     viewBtn:{
-        flex:1,
-        alignItems:'center'
+        flex: 1,
+        alignItems: 'center'
     },
     btnStyle:{
-        backgroundColor:'#3d2800'
+        backgroundColor: '#218876'
     },
     btnContainer:{
         width:'70%'
