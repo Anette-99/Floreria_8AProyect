@@ -77,7 +77,8 @@ function defaultFormValues(){
 
 const styles = StyleSheet.create({
     formContainer:{
-        marginTop: 30
+        marginTop: 25,
+        alignItems: 'center'
     },
     inputForm:{
         width: '100%',
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     },
     btnContainerRegister:{
         marginTop: 20,
-        width: '95%'
+        width: '80%'
     },
     btnRegister:{
         backgroundColor: '#008a81'

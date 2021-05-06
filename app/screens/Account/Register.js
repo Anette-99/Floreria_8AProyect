@@ -7,7 +7,7 @@ export default function Register(){
     return(
         <KeyboardAwareScrollView>
             <Image
-                source={require('../../../assets/img/close-up-florist-holding-jar-with-flowers.jpg')}
+                source={require('../../../assets/img/sección.gif')}
                 resizeMode='contain'
                 style={styles.logo}
             />
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     logo:{
         width: '100%',
-        height: 150,
-        marginTop: 20
+        height: 140,
+        marginTop: 15
     }
 })

@@ -11,7 +11,7 @@ export default function UserGuest(){
         <ScrollView style={styles.container}>
             <Image
                 style={styles.stretch}
-                source={require('../../../assets/img/sección.gif')}
+                source={require('../../../assets/img/LogoApp.png')}
             />
             <Text style={styles.title}> Ingresa a tu perfil</Text>
             <Text style={styles.description}>
@@ -37,17 +37,17 @@ const styles = StyleSheet.create({
         width:'100%',
         height:150,
         resizeMode:'contain',
-        marginBottom: 40,
+        marginBottom: 30,
 
     },
     title: {
         fontWeight:'bold',
-        fontSize:19,
+        fontSize:15,
         marginBottom:10,
         textAlign:'center'
     },
     description:{
-        marginBottom: 20,
+        marginBottom: 19,
         textAlign: 'center'
     },
     viewBtn:{
@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#218876'
     },
     btnContainer:{
-        width:'70%'
+        width:'50%'
     }
 })
