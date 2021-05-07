@@ -9,8 +9,19 @@ export default function RegisterForm(){
     const [formData, setFormData] = useState(defaultFormValues())
 
     const onSubmit = () => {
-        console.log(formData)
-        console.log(validateEmail(formData.email))
+        if(formData.email.length===0||formData.password.length===0||formData.repeatPassword.length===0){
+            console.log('Todos los campos son Requeridos')
+        } else if (!validateEmail(formData.email)){
+            console.log('El email no es Correcto')
+        } else if (formData.password !== formData.repeatPassword){
+            console.log('Las contraseñas no son Identicas')
+        } else if (formData.password.length < 6){
+            console.log('El password debe tener minimo 6 caracteres')
+        } else{
+            console.log('Todo Bien')
+        }
+        //console.log(formData)
+        //console.log(validateEmail(formData.email))
     }
 
     const onChange = (e, type) => {
