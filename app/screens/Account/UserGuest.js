@@ -15,7 +15,7 @@ export default function UserGuest(){
             />
             <Text style={styles.title}> Ingresa a tu perfil</Text>
             <Text style={styles.description}>
-                Busca y Visualiza las mejores tiendas, Califica a tu preferencia y Comenta
+                Califica y Comenta sobre las mejores tiendas de flores de tu preferencia
             </Text>
             <View style={styles.viewBtn}>
                 <Button
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     description:{
-        marginBottom: 19,
+        marginBottom: 15,
         textAlign: 'center'
     },
     viewBtn:{

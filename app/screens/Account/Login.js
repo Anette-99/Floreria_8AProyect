@@ -12,7 +12,7 @@ export default function Login(){
                 style={styles.logo}
             />
             <View style={styles.viewContainer}>
-                <Text>Login Form</Text>
+                <Text> </Text>
                 <CreateAccount/>
             </View>
             <Divider style = {styles.divider}/>
@@ -29,7 +29,7 @@ function CreateAccount(){
                 style = {styles.linkRegister}
                 onPress={()=>navigation.navigate('register')}
             >
-                Registrate
+                Registrate aquí
             </Text>
         </Text>
     )

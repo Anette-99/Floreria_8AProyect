@@ -4,7 +4,7 @@ import { View, Text } from 'react-native'
 export default function Favorites(){
     return(
         <View>
-            <Text>Favorites</Text>
+            <Text>Ve tus tiendas favoritas</Text>
         </View>
     )
 }
