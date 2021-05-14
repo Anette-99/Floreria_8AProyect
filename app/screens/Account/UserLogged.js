@@ -24,7 +24,7 @@ export default function UserLogged(){
                 titleStyle={styles.btnCloseSessionText}
                 onPress={()=>firebase.auth().signOut()}
             />
-            <Toast ref={toastRef}/>
+            <Toast ref={toastRef} position='center' opacity={0.9}/>
         </View>
     )
 }
