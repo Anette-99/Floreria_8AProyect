@@ -104,7 +104,7 @@ export default function InfoUser(props){
 }
 
 const styles = StyleSheet.create({
-    viewUserInfo:{
+    viewUserInfo: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 30
     },
-    userInfoAvatar:{
+    userInfoAvatar: {
         marginTop: 20,
         backgroundColor:'#00666e'
     },
-    displayName:{
+    displayName: {
         fontWeight: 'bold',
-        paddingBottom:5
+        paddingBottom: 5
     }
 })
