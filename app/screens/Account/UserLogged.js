@@ -4,27 +4,32 @@ import {Button} from 'react-native-elements'
 import Toast from 'react-native-toast-message'
 import firebase from 'firebase';
 import InfoUser from '../../components/Account/InfoUser'
+import AccountOptions from '../../components/Account/AccountOptions'
 
 export default function UserLogged(){
     const [userInfo, setUserInfo] = useState(null)
     const toastRef = useRef()
+
     useEffect(() =>{
         (async()=>{
             const user = await firebase.auth().currentUser
             setUserInfo(user)
         })()
     },[])
-    return(
+    return (
         <View style={styles.viewUserInfo}>
-            {userInfo&& <InfoUser userInfo={userInfo} toastRef={toastRef}/>}
-            <Text>AccountOptions...</Text>
+            {userInfo && <InfoUser userInfo={userInfo} toastRef={toastRef}/>}
+            {userInfo && <AccountOptions userInfo={userInfo} toastRef={toastRef}/>}
             <Button
                 title='Cerrar Sesión' 
                 buttonStyle={styles.btnCloseSession}
                 titleStyle={styles.btnCloseSessionText}
                 onPress={()=>firebase.auth().signOut()}
             />
-            <Toast ref={toastRef} position='center' opacity={0.9}/>
+            <Toast ref={toastRef} 
+              position='center' 
+              opacity={0.9} 
+            />
         </View>
     )
 }
@@ -32,20 +37,19 @@ export default function UserLogged(){
 const styles = StyleSheet.create({
     viewUserInfo:{
         minHeight: '100%',
-        alignItems: 'center',
         backgroundColor: '#f2f2f2'
     },
     btnCloseSession:{
-        marginTop: 25,
+        marginTop: 30,
         width: '100%',
-        borderRadius: 15,
+        borderRadius: 1,
         backgroundColor: '#218876',
         borderTopWidth: 1,
         borderTopColor: '#e3e3e3',
         borderBottomWidth: 1,
         borderBottomColor: '#e3e3e3',
         paddingTop: 10,
-        paddingBottom:10
+        paddingBottom: 10
     },
     btnCloseSessionText:{
         color: '#fff'

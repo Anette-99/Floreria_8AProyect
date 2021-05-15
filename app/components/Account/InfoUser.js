@@ -1,4 +1,4 @@
-import React from 'react' 
+import React, {useState, useEffect} from 'react' 
 import {StyleSheet, View, Text} from 'react-native'
 import { Avatar } from 'react-native-elements'
 import firebase from 'firebase'
@@ -51,7 +51,6 @@ export default function InfoUser(props){
                 })
             }
         }
-    
     }
 
     const uploadImage = async (uri) => {
@@ -119,5 +118,6 @@ const styles = StyleSheet.create({
     displayName: {
         fontWeight: 'bold',
         paddingBottom: 5
-    }
+    },
+
 })
