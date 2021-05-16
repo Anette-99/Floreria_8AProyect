@@ -1,15 +1,40 @@
-import React, {useState} from 'react'
-import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import { ListItem, Icon, Overlay } from 'react-native-elements'
-import { map } from 'lodash'
+import React from 'react'
+import { StyleSheet, Text, View} from 'react-native'
+import { ListItem, Icon} from 'react-native-elements'
 
 
-export default function AccountOptions({ userInfo, toastRef }) {
- /*   const [showModal, setShowModal] = useState(false)
-    const [renderComponent, setRenderComponent] = useState(null)*/
+export default function AccountOptions(props) {
+    const {userInfo, toastRef } = props
+    const selectedComponent = (key) =>{
+        console.log('click')
+        console.log(key)
+    }
+    const menuOptions = generateOptions(selectedComponent)
+
+    return (
+        <View>
+            {menuOptions.map((menu,index)=>(
+                <ListItem 
+                key={index} 
+                bottomDivider 
+                style={styles.menItem}
+                onPress={menu.onPress}>
+                    <Icon 
+                    type='material-community'
+                    name={menu.iconNameLeft}
+                    color={menu.iconColorLeft}
+                    />
+                    <ListItem.Content>
+                            <ListItem.Title>{menu.title}</ListItem.Title>
+                        </ListItem.Content>
+                        <ListItem.Chevron/>
+                </ListItem>
+             ))}
+        </View>
+    )
+}
  
- 
-    const generateOptions = () => {
+    function generateOptions(selectedComponent){
         return [
             {
                 title:'Cambiar Nombre y Apellidos',
@@ -37,41 +62,6 @@ export default function AccountOptions({ userInfo, toastRef }) {
             }
         ]
     }
-    const selectedComponent = (key) => {
-        console.log('click')
-        console.log(key)
-    }
-
-    const menuOptions = generateOptions()
-
-    return (
-        <View>
-            {
-                map(menuOptions, (menu, index) => (
-                    <ListItem
-                        key={index}
-                        style={styles.menItem}
-                        onPress={menu.onPress}
-                    >
-                        <Icon
-                            type='material-community'
-                            name={menu.iconNameLeft}
-                            color={menu.iconColorLeft}
-                        />
-                        <ListItem.Content>
-                            <ListItem.Title>{menu.title}</ListItem.Title>
-                        </ListItem.Content>
-                        <Icon
-                            type='material-community'
-                            name={menu.iconNameRight}
-                            color={menu.iconColorRight}
-                        />
-                    </ListItem>
-                ))
-            }
-        </View>
-    )
-}
 
 const styles = StyleSheet.create({
     menItem:{
