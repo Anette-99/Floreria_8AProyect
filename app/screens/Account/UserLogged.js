@@ -8,6 +8,7 @@ import AccountOptions from '../../components/Account/AccountOptions'
 
 export default function UserLogged(){
     const [userInfo, setUserInfo] = useState(null)
+    const [reloadUserInfo, setReloadUserInfo] = useState(false)
     const toastRef = useRef()
 
     useEffect(() =>{
@@ -15,11 +16,14 @@ export default function UserLogged(){
             const user = await firebase.auth().currentUser
             setUserInfo(user)
         })()
-    },[])
+        setReloadUserInfo(false)
+    }, [reloadUserInfo])
+
+
     return (
         <View style={styles.viewUserInfo}>
-            {userInfo && <InfoUser userInfo={userInfo} toastRef={toastRef}/>}
-            {userInfo && <AccountOptions userInfo={userInfo} toastRef={toastRef}/>}
+            {userInfo && (<InfoUser userInfo={userInfo} toastRef={toastRef}/>)}
+            <AccountOptions userInfo={userInfo} toastRef={toastRef} setReloadUserInfo={setReloadUserInfo}/>
             <Button
                 title='Cerrar Sesión' 
                 buttonStyle={styles.btnCloseSession}
