@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native'
 import {Input, Button, Icon} from 'react-native-elements'
 import {isEmpty, size} from 'lodash'
 
-
 export default function ChangePasswordForm(props) {
     const {setShowModal, toastRef} = props
     const [newPassword, setNewPassword] = useState(null)
@@ -15,13 +14,11 @@ export default function ChangePasswordForm(props) {
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
-
     const onSubmit= ()=>{
         setErrorNewPassword(null)
         setErrorCurrentPassword(null)
         setErrorConfirmPassword(null)
         let isValid = true
-
 
         if(isEmpty(currentPassword)) {
             setErrorCurrentPassword('Debes ingresar tu contraseña actual')
@@ -130,3 +127,4 @@ const styles = StyleSheet.create({
         backgroundColor: '#218876'
     }
 })
+
