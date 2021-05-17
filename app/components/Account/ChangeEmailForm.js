@@ -5,7 +5,7 @@ import { validateEmail } from '../../utils/validation'
 import {isEmpty} from 'lodash'
 import firebase from 'firebase'
 
-export default function ChangeDisplayNameForm(props){
+export default function ChangeEmailForm(props){
     const {email, setShowModal, toastRef, setReloadUserInfo} = props
     const [newEmail, setNewEmail] = useState(email)
     const [password, setPassword] = useState(null)
