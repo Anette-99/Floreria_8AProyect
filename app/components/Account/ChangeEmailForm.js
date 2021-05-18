@@ -17,18 +17,30 @@ export default function ChangeEmailForm(props){
 
     const onSubmit= ()=>{
         setErrorEmail(null)
-        setErrorPassword(null)
-        let isValid = true
-        if(!validateEmail(newEmail)){
-            setErrorEmail('Debes ingresar un Email valido')
-            isValid = false
-        } else if(newEmail === email){
-            setErrorEmail('Debes ingresar un Email diferente al actual')
-            isValid = false
-        } if(isEmpty(password)){
-            setErrorPassword('Debes ingresar tu contraseña')
-            isValid = false
-        }    
+        if(!newEmail){
+            setErrorEmail('El campo no puede estar vacio')
+        } else if(email === newEmail){
+            setErrorEmail('Debes ingresar un email correcto')
+        } else if (!password){
+            setErrorPassword('Introduzca su Contraseña')
+        } else{
+            setIsLoading(true)
+
+            var user = firebase.auth().currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(email, password)
+
+            user.reauthenticateWithCredential(credential).then(function(){
+                firebase.auth().currentUser.updateEmail(newEmail).then(()=>{
+                    console.log('Exito en firebase') 
+                    setIsLoading(false)
+                    setReloadUserInfo(true)
+                    setShowModal(false)
+                }).catch((errorEmail)=>{console.log(errorEmail) 
+                    setIsLoading(false)})
+            }).catch(function(errorEmail){setIsLoading(false)
+                setErrorPassword('La contraseña no es correcta')
+            })
+        }   
 }
 
     return (
