@@ -1,49 +1,48 @@
 import React, {useState} from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import {Input, Button, Icon} from 'react-native-elements'
-import {isEmpty, size} from 'lodash'
+import firebase from 'firebase'
 
 export default function ChangePasswordForm(props) {
-    const {setShowModal, toastRef} = props
+    const {email, setShowModal, toastRef, setReloadUserInfo} = props
     const [newPassword, setNewPassword] = useState(null)
-    const [currentPassword, setCurrentPassword] = useState(null)
-    const [confirmPassword, setConfirmPassword] = useState(null)
-    const [errorNewPassword, setErrorNewPassword] = useState(null)
-    const [errorCurrentPassword, setErrorCurrentPassword] = useState(null)
-    const [errorConfirmPassword, setErrorConfirmPassword] = useState(null)
+    const [password, setPassword] = useState(null)
+    const [error, setError] = useState(null)
+    const [errorPassword, setErrorPassword] = useState(null)
     const [showPassword, setShowPassword] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
     const onSubmit= ()=>{
-        setErrorNewPassword(null)
-        setErrorCurrentPassword(null)
-        setErrorConfirmPassword(null)
-        let isValid = true
+        setError(null)
+        if(!newPassword) {
+            setError('El campo no debe ser vacio')
+        }else if(password === newPassword) {
+            setError('Tu contraseña no debe ser igual al actual')
+        }else if(newPassword.length < 6) {
+            setError('Debes ingresar una contraseña con un mínimo de 6 caracteres')
+        }else if(!password) {
+            setErrorPassword('Ingrese la contraseña')
+        } else {setIsLoading(true)
+            console.log(newPassword)
 
-        if(isEmpty(currentPassword)) {
-            setErrorCurrentPassword('Debes ingresar tu contraseña actual')
-            isValid = false
-        } 
-        if(size(newPassword) < 6) {
-            setErrorNewPassword('Debes ingresar una nueva contraseña con un mínimo de 6 caracteres')
-            isValid = false
+
+            var user = firebase.auth().currentUser;
+            const credential = firebase.auth.EmailAuthProvider.credential(email, password)
+
+            user.reauthenticateWithCredential(credential).then(function(){
+                firebase.auth().currentUser.updatePassword(newPassword).then(()=>{
+                    console.log('Exito en firebase') 
+                    console.log(newPassword)
+                    setIsLoading(false)
+                    setReloadUserInfo(true)
+                    setShowModal(false)
+                }).catch((error)=>{console.log(error) 
+                    setIsLoading(false)})
+            }).catch(function(error){setIsLoading(false)
+                setErrorPassword('La contraseña no es correcta')
+            });
         }
-        if(size(confirmPassword) < 6) {
-            setErrorConfirmPassword('Debes ingresar una nueva confirmación de tu contraseña con un mínimo de 6 caracteres')
-            isValid = false
-        } 
-        if(newPassword !== confirmPassword) {
-            setErrorNewPassword('La nueva contraseña y la confirmación no son iguales')
-            setErrorConfirmPassword('La nueva contraseña y la confirmación no son iguales')
-            isValid = false
-        } 
-        if(newPassword === currentPassword) {
-            setErrorCurrentPassword('Debes de ingresar una contraseña diferente a la actual')
-            setErrorNewPassword('Debes de ingresar una contraseña diferente a la actual')
-            setErrorConfirmPassword('Debes de ingresar una contraseña diferente a la actual')
-            isValid = false
-        }
-        return isValid   
+         
 }
 
     return (
@@ -51,9 +50,6 @@ export default function ChangePasswordForm(props) {
             <Input
                 placeholder='Ingresa tu contraseña actual'
                 containerStyle={styles.input}
-                defaultValue={currentPassword}
-                onChange={(e)=>setCurrentPassword(e.nativeEvent.text)}
-                errorMessage={errorCurrentPassword}
                 password={true}
                 secureTextEntry={!showPassword}
                 rightIcon={
@@ -64,40 +60,24 @@ export default function ChangePasswordForm(props) {
                         onPress={()=> setShowPassword(!showPassword)}
                     />
                 }
+                onChange={(e)=>setPassword(e.nativeEvent.text)}
+                errorMessage={errorPassword}
             />
             <Input
                 placeholder='Ingresa tu nueva contraseña'
                 containerStyle={styles.input}
-                defaultValue={newPassword}
+                password={true}
+                secureTextEntry={!showPassword}
+                rightIcon={
+                    <Icon
+                        type='material-community'
+                        name={ showPassword ? 'eye-off-outline' : 'eye-outline'}
+                        iconStyle={{color:'#218876'}}
+                        onPress={()=> setShowPassword(!showPassword)}
+                    />
+                }
                 onChange={(e) => setNewPassword(e.nativeEvent.text)}
-                errorMessage={errorNewPassword}
-                password={true}
-                secureTextEntry={!showPassword}
-                rightIcon={
-                    <Icon
-                        type='material-community'
-                        name={ showPassword ? 'eye-off-outline' : 'eye-outline'}
-                        iconStyle={{color:'#218876'}}
-                        onPress={()=> setShowPassword(!showPassword)}
-                    />
-                }
-            />
-            <Input
-                placeholder='Confirma tu nueva contraseña'
-                containerStyle={styles.input}
-                defaultValue={confirmPassword}
-                onChange={(e)=>setConfirmPassword(e.nativeEvent.text)}
-                errorMessage={errorCurrentPassword}
-                password={true}
-                secureTextEntry={!showPassword}
-                rightIcon={
-                    <Icon
-                        type='material-community'
-                        name={ showPassword ? 'eye-off-outline' : 'eye-outline'}
-                        iconStyle={{color:'#218876'}}
-                        onPress={()=> setShowPassword(!showPassword)}
-                    />
-                }
+                errorMessage={error}
             />
             <Button
                 title= 'Cambiar contraseña'
