@@ -18,8 +18,6 @@ export default function AddFlowerShop() {
                 toastRef={toastRef} 
                 setLoading={setLoading} 
                 navigation={useNavigation}/>
-            <Loading isVisible={true} text='cargando...'/>
-            <Toast ref={toastRef}/>
         </KeyboardAwareScrollView>
     )
 }
