@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native'
-import {Input, Button} from 'react-native-elements'
+import React, {useState, useEffect} from 'react'
+import { StyleSheet, Text, View, ScrollView} from 'react-native'
+import {Input, Button, Image, Icon, Avatar} from 'react-native-elements'
+import Modal from '../Modal'
 import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
 import * as ImagePicker from 'expo-image-picker'
 
 export default function AddFlowerShopForm(props) {
@@ -11,7 +13,8 @@ export default function AddFlowerShopForm(props) {
         const [description, setDescription] = useState(null) 
         const [errorFlor, setErrorFlor] = useState(null) 
         const [errorDireccion, setErrorDireccion] = useState(null) 
-        const [errorDescripcion, setErrorDescripcion] = useState(null) 
+        const [errorDescripcion, setErrorDescripcion] = useState(null)
+        const [isVisibleMap, setIsVisibleMap] = useState(false) 
     
         const onSubmit = ()=>{
             
@@ -55,6 +58,9 @@ export default function AddFlowerShopForm(props) {
     return (
             <View style={styles.FormView}>
             <Input
+                setIsVisibleMap={setIsVisibleMap}
+            />
+            <Input
                 placeholder='Nombre de la Floreria'
                 placeholderTextColor="#218876"
                 containerStyle={styles.input}
@@ -70,7 +76,8 @@ export default function AddFlowerShopForm(props) {
                 rightIcon={{
                     type:'material-community',
                     name:'google-maps',
-                    color: '#218876'
+                    color: '#4a2e00',
+                    onPress:()=> setIsVisibleMap(true)
                 }}
             />
                 <Input
@@ -81,15 +88,66 @@ export default function AddFlowerShopForm(props) {
                 onChange={(e)=>setDescription(e.nativeEvent.text)}
                 errorMessage={errorDescripcion}
             />
+            <UploadImage/>
             <Button
                 title= 'Agregar Floreria'
                 containerStyle={styles.btnContainer}
                 buttonStyle={styles.btn}
                 onPress={onSubmit}
             />
+            <Map
+                isVisibleMap={isVisibleMap}
+                setIsVisibleMap={setIsVisibleMap}
+            />
         </View>
+
     )
 }
+
+function Map(props){
+    const {isVisibleMap, setIsVisibleMap} = props
+    const [location, setLocation] = useState(null)
+
+    useEffect(() => {
+        (async()=>{
+            const resultPermissions = await Permissions.askAsync(Permissions.LOCATION_FOREGROUND)
+            console.log(resultPermissions)
+            const  statusPermissions = resultPermissions.permissions.locationForeground.status
+            if(statusPermissions==='granted'){
+                const locate = await Location.getCurrentPositionAsync({})
+                console.log(locate)
+                setLocation({
+                    latitude: locate.coords.latitude,
+                    longitude: locate.coords.longitud
+                })
+            }
+        })()
+    }, [])    
+
+    return(
+        <Modal isVisible={isVisibleMap} setIsVisible={setIsVisibleMap}>
+            <Text>Mapa.....</Text>
+        </Modal>
+    )
+}
+
+function UploadImage() {
+    return(
+        <ScrollView
+            horizontal
+            style={styles.viewImage}
+        >
+            <Icon
+                type='material-community'
+                name='camera'
+                color='#4a2e00'
+                containerStyle={styles.containerIcon}
+            />
+
+        </ScrollView>
+    )
+}
+
 
 const styles = StyleSheet.create({
     input:{
@@ -106,6 +164,19 @@ const styles = StyleSheet.create({
         width:'100%'
     },
     btn:{
-        backgroundColor: '#218876'
+        backgroundColor: '#4a2e00'
+    },
+    viewImage:{
+        flexDirection: 'row',
+        marginHorizontal: 20,
+        marginTop: 20
+    },
+    containerIcon:{
+        alignItems:'center',
+        justifyContent:'center',
+        marginRight: 10,
+        height: 70,
+        width:79,
+        backgroundColor:'#e3e3e3'
     }
 })
