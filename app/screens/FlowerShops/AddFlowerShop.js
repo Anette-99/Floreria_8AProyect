@@ -17,7 +17,8 @@ export default function AddFlowerShop() {
             <AddFlowerShopForm 
                 toastRef={toastRef} 
                 setLoading={setLoading} 
-                navigation={useNavigation}/>
+                navigation={useNavigation}
+            />
         </KeyboardAwareScrollView>
     )
 }
